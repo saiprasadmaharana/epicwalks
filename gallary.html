@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Epic Walks - Gallery</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+</head>
+<body>
+
+<header>
+  <h1>Epic India Travel Journey</h1>
+  <p>Follow the cultural heartbeat of India, from temples to monuments.</p>
+</header>
+
+<nav class="navbar">
+  <div class="nav-container">
+    <div class="logo">Epic Walks</div>
+    <div class="menu-toggle" id="menu-toggle" aria-label="Toggle Menu" aria-expanded="false" role="button" tabindex="0">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </div>
+    <ul class="nav-menu">
+      <li><a href="index.html">Home</a></li>
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle">My Journey</a>
+        <ul class="dropdown-content">
+          <li><a href="2022.html">2022</a></li>
+          <li><a href="2023.html">2023</a></li>
+          <li><a href="2024.html">2024</a></li>
+        </ul>
+      </li>
+      <li><a href="2025.html">Upcoming Trips</a></li>
+      <li><a href="destination.html">Destinations</a></li>
+      <li><a href="gallary.html">Gallery</a></li>
+      <li><a href="connect.html">Connect Us</a></li>
+    </ul>
+  </div>
+</nav>
+
+<script>
+// Toggle menu on hamburger click
+const menuToggle = document.getElementById('menu-toggle');
+const navMenu = document.querySelector('.nav-menu');
+
+menuToggle.addEventListener('click', () => {
+  menuToggle.classList.toggle('active');
+  navMenu.classList.toggle('active');
+  // Animate hamburger to X
+  if (menuToggle.classList.contains('active')) {
+    menuToggle.setAttribute('aria-expanded', 'true');
+  } else {
+    menuToggle.setAttribute('aria-expanded', 'false');
+  }
+});
+
+// Handle dropdown in mobile
+document.querySelectorAll('.dropdown > a').forEach(link => {
+  link.addEventListener('click', e => {
+    if (window.innerWidth <= 768) {
+      e.preventDefault();
+      const parentLi = link.parentElement;
+      parentLi.classList.toggle('show');
+    }
+  });
+});
+</script>
+
+
+<section>
+  <h2>Memories Collection</h2>
+  <div class="gallery">
+    <div class="gallery-item">
+      <img src="https://static.toiimg.com/photo/65666850.cms">
+      <div class="overlay">Delhi</div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://treasuretripin.com/wp-content/uploads/2023/12/SECRETS-TO-EXPERIENCE-IN-TAJ-MAHAL.png">
+      <div class="overlay">Taj Mahal</div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://s7ap1.scene7.com/is/image/incredibleindia/manikarnika-ghat-city-hero?qlt=82&ts=1727959374496">
+      <div class="overlay">Varanasi</div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://www.hindustantimes.com/ht-img/img/2024/01/22/original/PTI01-22-2024-000010B-0_1705901965915.jpg">
+      <div class="overlay">Ayodhya</div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://s7ap1.scene7.com/is/image/incredibleindia/qutab-minar-delhi-attr-hero?qlt=82&ts=1742169673469">
+      <div class="overlay">Qutub Minar</div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://media1.thrillophilia.com/filestore/qhqpu576jwj95kntok28k27w5hzk_1574923441_akshardham_monument_evening-106.jpg">
+      <div class="overlay">Akshardham</div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://s7ap1.scene7.com/is/image/incredibleindia/lotus-temple-delhi-1-attr-hero?qlt=82&ts=1742182268849">
+      <div class="overlay">Lotus Temple</div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://s7ap1.scene7.com/is/image/incredibleindia/prem-mandir-vrindavan-uttar-pradesh-1-attr-hero?qlt=82&ts=1726649460922">
+      <div class="overlay">Vrindavan</div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://cdn.britannica.com/19/256719-050-E4CE0DBA/Sarnath-site-Dhamekh-Stupa-Varanasi-Uttar-Pradesh-India.jpg">
+      <div class="overlay">Sarnath</div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://static.toiimg.com/thumb/msid-115762993,width-1280,height-720,resizemode-4/115762993.jpg">
+      <div class="overlay">Mathura</div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://media.istockphoto.com/id/530927704/photo/mahabodhi-temple-bodhgaya.jpg?s=612x612&w=0&k=20&c=MeuSoIquuLhsQB5JNv3zDn8G6IPuNRlbcIW9EZd4o3o=">
+      <div class="overlay">Bodh Gaya</div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://c.ndtvimg.com/2024-01/i6g1iu7g_jagannath-temple-pti_625x300_16_January_24.jpeg">
+      <div class="overlay">Puri</div>
+    </div>
+        <div class="gallery-item">
+      <img src="img/2.jpg">
+      <div class="overlay">Rameswaram</div>
+    </div>
+         <div class="gallery-item">
+      <img src="img/11.jpg">
+      <div class="overlay">Rameswaram</div>
+    </div>
+
+        <div class="gallery-item">
+      <img src="img/12.jpg">
+      <div class="overlay">Rameswaram</div>
+    </div>
+        <div class="gallery-item">
+      <img src="img/13.jpg">
+      <div class="overlay">Rameswaram</div>
+    </div>
+        <div class="gallery-item">
+      <img src="img/21.jpg">
+      <div class="overlay">Dwarka</div>
+    </div>
+            <div class="gallery-item">
+      <img src="img/22.jpg">
+      <div class="overlay">Dwarka</div>
+    </div>
+            <div class="gallery-item">
+      <img src="img/23.jpg">
+      <div class="overlay">Dwarka</div>
+    </div>
+            <div class="gallery-item">
+      <img src="img/24.jpg">
+      <div class="overlay">Dwarka</div>
+    </div>
+            <div class="gallery-item">
+      <img src="img/25.jpg">
+      <div class="overlay">Dwarka</div>
+    </div>
+            <div class="gallery-item">
+      <img src="img/26.jpg">
+      <div class="overlay">Dwarka</div>
+    </div>
+            <div class="gallery-item">
+      <img src="img/27.jpg">
+      <div class="overlay">Dwarka</div>
+    </div>
+            <div class="gallery-item">
+      <img src="img/28.jpg">
+      <div class="overlay">Dwarka</div>
+    </div>
+            <div class="gallery-item">
+      <img src="img/29.jpg">
+      <div class="overlay">Dwarka</div>
+    </div>
+                <div class="gallery-item">
+      <img src="img/30.jpg">
+      <div class="overlay">Dwarka</div>
+    </div>
+
+                <div class="gallery-item">
+      <img src="img/31.jpg">
+      <div class="overlay">Kevadia</div>
+    </div>
+
+                    <div class="gallery-item">
+      <img src="img/32.jpg">
+      <div class="overlay">Kevadia</div>
+    </div>
+                    <div class="gallery-item">
+      <img src="img/33.jpg">
+      <div class="overlay">Kevadia</div>
+    </div>
+                    <div class="gallery-item">
+      <img src="img/34.jpg">
+      <div class="overlay">Kevadia</div>
+    </div>
+                    <div class="gallery-item">
+      <img src="img/35.jpg">
+      <div class="overlay">Kevadia</div>
+    </div>
+                    <div class="gallery-item">
+      <img src="img/36.jpg">
+      <div class="overlay">Kevadia</div>
+    </div>
+                    <div class="gallery-item">
+      <img src="img/37.jpg">
+      <div class="overlay">Kevadia</div>
+    </div>
+                    <div class="gallery-item">
+      <img src="img/38.jpg">
+      <div class="overlay">Kevadia</div>
+    </div>
+
+                    <div class="gallery-item">
+      <img src="img/39.jpg">
+      <div class="overlay">Kevadia</div>
+    </div>
+
+                        <div class="gallery-item">
+      <img src="img/40.jpg">
+      <div class="overlay">Kevadia</div>
+    </div>
+                        <div class="gallery-item">
+      <img src="img/100.jpg">
+      <div class="overlay">Kevadia</div>
+    </div>
+
+
+                        <div class="gallery-item">
+      <img src="img/41.jpg">
+      <div class="overlay">Somnath</div>
+    </div>
+                        <div class="gallery-item">
+      <img src="img/42.jpg">
+      <div class="overlay">Somnath</div>
+    </div>
+                        <div class="gallery-item">
+      <img src="img/43.jpg">
+      <div class="overlay">Somnath</div>
+    </div>
+
+                        <div class="gallery-item">
+      <img src="img/44.jpg">
+      <div class="overlay">Somnath</div>
+    </div>
+
+                        <div class="gallery-item">
+      <img src="img/45.jpg">
+      <div class="overlay">Somnath</div>
+    </div>
+
+                        <div class="gallery-item">
+      <img src="img/51.jpg">
+      <div class="overlay">Tirupati</div>
+    </div>
+                        <div class="gallery-item">
+      <img src="img/52.jpg">
+      <div class="overlay">Tirupati</div>
+    </div>
+                        <div class="gallery-item">
+      <img src="img/53.jpg">
+      <div class="overlay">Tirupati</div>
+    </div>
+
+                        <div class="gallery-item">
+      <img src="img/54.jpg">
+      <div class="overlay">Tirupati</div>
+    </div>
+
+                        <div class="gallery-item">
+      <img src="img/55.jpg">
+      <div class="overlay">Tirupati</div>
+    </div>
+
+                        <div class="gallery-item">
+      <img src="img/56.jpg">
+      <div class="overlay">Tirupati</div>
+    </div>
+
+                        <div class="gallery-item">
+      <img src="img/57.jpg">
+      <div class="overlay">Tirupati</div>
+    </div>
+
+                            <div class="gallery-item">
+      <img src="img/58.jpg">
+      <div class="overlay">Tirupati</div>
+    </div>
+                        <div class="gallery-item">
+      <img src="img/61.jpg">
+      <div class="overlay">Trivandram</div>
+    </div>
+                        <div class="gallery-item">
+      <img src="img/71.jpg">
+      <div class="overlay">Kannyakumari</div>
+    </div>
+                        <div class="gallery-item">
+      <img src="img/72.jpg">
+      <div class="overlay">Kannyakumari</div>
+    </div>
+                            <div class="gallery-item">
+      <img src="img/73.jpg">
+      <div class="overlay">Kannyakumari</div>
+    </div>
+                            <div class="gallery-item">
+      <img src="img/74.jpg">
+      <div class="overlay">Kannyakumari</div>
+    </div>
+                            <div class="gallery-item">
+      <img src="img/75.jpg">
+      <div class="overlay">Kannyakumari</div>
+    </div>
+                            <div class="gallery-item">
+      <img src="img/76.jpg">
+      <div class="overlay">Kannyakumari</div>
+    </div>
+                    <div class="gallery-item">
+      <img src="img/77.jpg">
+      <div class="overlay">Kannyakumari</div>
+    </div>
+
+                        <div class="gallery-item">
+      <img src="img/78.jpg">
+      <div class="overlay">Kannyakumari</div>
+    </div>
+
+                        <div class="gallery-item">
+      <img src="img/79.jpg">
+      <div class="overlay">Kannyakumari</div>
+    </div>
+
+
+                        <div class="gallery-item">
+      <img src="img/81.jpg">
+      <div class="overlay">Vellore</div>
+    </div>
+
+                            <div class="gallery-item">
+      <img src="img/82.jpg">
+      <div class="overlay">Vellore</div>
+    </div>
+                            <div class="gallery-item">
+      <img src="img/83.jpg">
+      <div class="overlay">Vellore</div>
+    </div>
+                            <div class="gallery-item">
+      <img src="img/84.jpg">
+      <div class="overlay">Vellore</div>
+    </div>
+                            <div class="gallery-item">
+      <img src="img/85.jpg">
+      <div class="overlay">Vellore</div>
+    </div>
+                            <div class="gallery-item">
+      <img src="img/86.jpg">
+      <div class="overlay">Vellore</div>
+    </div>
+
+
+
+
+  </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+<section class="social-follow">
+  <h2>Follow Our Journey</h2>
+  <p>Stay connected! Follow us on social media to enjoy our adventures in real-time.</p>
+  <div class="social-icons">
+    <a href="https://www.facebook.com/YOUR_PAGE" target="_blank" class="icon facebook">
+      <i class="fab fa-facebook-f"></i>
+    </a>
+    <a href="https://www.instagram.com/YOUR_PAGE" target="_blank" class="icon instagram">
+      <i class="fab fa-instagram"></i>
+    </a>
+    <a href="https://www.twitter.com/YOUR_PAGE" target="_blank" class="icon twitter">
+      <i class="fab fa-twitter"></i>
+    </a>
+    <a href="https://www.youtube.com/YOUR_CHANNEL" target="_blank" class="icon youtube">
+      <i class="fab fa-youtube"></i>
+    </a>
+  </div>
+</section>
+
+
+
+
+
+
+
+
+
+  <footer>
+    <p>© 2025 Epic Walks | Designed with ❤️</p>
+  </footer>
+
+
+  <script src="main.js"></script>
+</body>
+</html>

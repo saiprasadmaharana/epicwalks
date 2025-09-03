@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Epic Walks - Destinations</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+</head>
+<body>
+
+<header>
+  <h1>Epic India Travel Journey</h1>
+  <p>Follow the cultural heartbeat of India, from temples to monuments.</p>
+</header>
+
+<nav class="navbar">
+  <div class="nav-container">
+    <div class="logo">Epic Walks</div>
+    <div class="menu-toggle" id="menu-toggle" aria-label="Toggle Menu" aria-expanded="false" role="button" tabindex="0">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </div>
+    <ul class="nav-menu">
+      <li><a href="index.html">Home</a></li>
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle">My Journey</a>
+        <ul class="dropdown-content">
+          <li><a href="2022.html">2022</a></li>
+          <li><a href="2023.html">2023</a></li>
+          <li><a href="2024.html">2024</a></li>
+        </ul>
+      </li>
+      <li><a href="2025.html">Upcoming Trips</a></li>
+      <li><a href="destination.html">Destinations</a></li>
+      <li><a href="gallary.html">Gallery</a></li>
+      <li><a href="connect.html">Connect Us</a></li>
+    </ul>
+  </div>
+</nav>
+
+<script>
+// Toggle menu on hamburger click
+const menuToggle = document.getElementById('menu-toggle');
+const navMenu = document.querySelector('.nav-menu');
+
+menuToggle.addEventListener('click', () => {
+  menuToggle.classList.toggle('active');
+  navMenu.classList.toggle('active');
+  // Animate hamburger to X
+  if (menuToggle.classList.contains('active')) {
+    menuToggle.setAttribute('aria-expanded', 'true');
+  } else {
+    menuToggle.setAttribute('aria-expanded', 'false');
+  }
+});
+
+// Handle dropdown in mobile
+document.querySelectorAll('.dropdown > a').forEach(link => {
+  link.addEventListener('click', e => {
+    if (window.innerWidth <= 768) {
+      e.preventDefault();
+      const parentLi = link.parentElement;
+      parentLi.classList.toggle('show');
+    }
+  });
+});
+</script>
+
+
+
+
+<!-- Map Container -->
+<section>
+  <h2>Visited Destinations Map</h2>
+  <div id="visited-map"></div>
+</section>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+  const visitedMap = L.map('visited-map', {
+    zoomControl: true,
+    attributionControl: false
+  }).setView([20.5, 78.9], 5);
+
+  const INDIA_STATES_GEOJSON_URL =
+    'https://cdn.jsdelivr.net/gh/udit-001/india-maps-data/geojson/india.geojson';
+
+  const visitedPlaces = [
+    { city: "Tirumala", lat: 13.6839, lng: 79.3500 },
+    { city: "Dwarka", lat: 22.2442, lng: 68.9685 },
+    { city: "Somnath", lat: 20.8880, lng: 70.4012 },
+    { city: "Kevadia", lat: 21.8380, lng: 73.7191 },
+    { city: "Bengaluru", lat: 12.9716, lng: 77.5946 },
+    { city: "Vellore", lat: 12.9165, lng: 79.1325 },
+    { city: "Trivandrum", lat: 8.5241, lng: 76.9366 },
+    { city: "Kanniyakumari", lat: 8.0883, lng: 77.5385 },
+    { city: "Madurai", lat: 9.9252, lng: 78.1198 },
+    { city: "Rameswaram", lat: 9.2881, lng: 79.3129 }
+  ];
+
+  const hubIcon = L.divIcon({
+    className: '',
+    html: `<div style="width:14px;height:14px;background:#d32f2f;border-radius:50%;box-shadow:0 0 0 2px #fff;"></div>`,
+    iconSize: [14,14],
+    iconAnchor: [7,7]
+  });
+
+  visitedPlaces.forEach(p => {
+    const marker = L.marker([p.lat, p.lng], { icon: hubIcon }).addTo(visitedMap);
+    marker.bindPopup(`<h3>${p.city}</h3><p>Visited Destination</p>`);
+    marker.bindTooltip(p.city, {
+      permanent: true,
+      direction: 'right',
+      offset: L.point(10,0),
+      className: 'hub-label'
+    }).openTooltip();
+  });
+
+  // Pastel state colors
+  function getRandomColor() {
+    const colors = ['#f8bbd0','#c5cae9','#b2dfdb','#ffe082','#d7ccc8','#c8e6c9','#ffccbc','#b3e5fc'];
+    return colors[Math.floor(Math.random() * colors.length)];
+  }
+
+  fetch(INDIA_STATES_GEOJSON_URL)
+    .then(r => r.json())
+    .then(geojson => {
+      const stateLayer = L.geoJSON(geojson, {
+        style: () => ({
+          color: '#333',
+          weight: 1,
+          fillColor: getRandomColor(),
+          fillOpacity: 0.9
+        })
+      }).addTo(visitedMap);
+
+      // Fit map around all visited points
+      const bounds = L.latLngBounds(visitedPlaces.map(p => [p.lat, p.lng]));
+      visitedMap.fitBounds(bounds, { padding: [30,30] });
+    });
+</script>
+
+
+
+<section class="social-follow">
+  <h2>Follow Our Journey</h2>
+  <p>Stay connected! Follow us on social media to enjoy our adventures in real-time.</p>
+  <div class="social-icons">
+    <a href="https://www.facebook.com/YOUR_PAGE" target="_blank" class="icon facebook">
+      <i class="fab fa-facebook-f"></i>
+    </a>
+    <a href="https://www.instagram.com/YOUR_PAGE" target="_blank" class="icon instagram">
+      <i class="fab fa-instagram"></i>
+    </a>
+    <a href="https://www.twitter.com/YOUR_PAGE" target="_blank" class="icon twitter">
+      <i class="fab fa-twitter"></i>
+    </a>
+    <a href="https://www.youtube.com/YOUR_CHANNEL" target="_blank" class="icon youtube">
+      <i class="fab fa-youtube"></i>
+    </a>
+  </div>
+</section>
+
+
+
+
+
+
+
+
+
+  <footer>
+    <p>© 2025 Epic Walks | Designed with ❤️</p>
+  </footer>
+
+
+  <script src="main.js"></script>
+</body>
+</html>

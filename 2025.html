@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Epic India Travel Journey</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #fdfdfd;
+      color: #222;
+      line-height: 1.6;
+    }
+
+/* Existing styles (your code) */
+header {
+  text-align: center;
+  padding: 1.5rem 1rem; /* Reduced padding for smaller height */
+  background: linear-gradient(135deg, #ff512f, #dd2476);
+  color: white;
+  border-bottom-left-radius: 2rem;
+  border-bottom-right-radius: 2rem;
+  box-shadow: 0 6px 25px rgba(0,0,0,0.25);
+}
+
+/* Adjust the heading size for a more compact look */
+header h1 {
+  font-size: 2rem; /* Smaller font size */
+  font-weight: 800;
+  margin-bottom: 0.5rem; /* Less space below the heading */
+  text-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+}
+
+/* Adjust paragraph size if needed */
+header p {
+  font-size: 1rem; /* Slightly smaller text */
+  opacity: 0.95;
+}
+
+section {
+  padding: 3rem 2rem;
+  max-width: 1200px;
+  margin: auto;
+}
+
+h2 {
+  text-align: center;
+  font-size: 2.2rem;
+  margin-bottom: 2rem;
+  font-weight: 800;
+  color: #333;
+  position: relative;
+}
+
+h2::after {
+  content: "";
+  display: block;
+  width: 80px;
+  height: 5px;
+  background: linear-gradient(135deg, #ff512f, #dd2476);
+  margin: 0.8rem auto 0;
+  border-radius: 5px;
+}
+
+/* Responsive adjustments for mobile screens */
+@media (max-width: 768px) {
+  header {
+    padding: 2rem 1rem;
+  }
+
+  header h1 {
+    font-size: 2rem; /* Smaller font size for mobile */
+    line-height: 1.2;
+  }
+
+  header p {
+    font-size: 1rem; /* Smaller paragraph text */
+  }
+
+  section {
+    padding: 2rem 1rem;
+  }
+
+  h2 {
+    font-size: 1.8rem; /* Adjust heading size for smaller screens */
+  }
+
+  h2::after {
+    width: 60px; /* Slightly smaller decorative line */
+  }
+}
+
+/* Highlights Grid */
+.highlights {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+.highlight {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(15px);
+  border-radius: 1.8rem;
+  padding: 1.5rem;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+  transition: transform 0.4s, box-shadow 0.4s;
+  position: relative;
+  overflow: hidden;
+}
+
+.highlight:hover {
+  transform: translateY(-12px) scale(1.04);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+}
+
+/* Image Banner */
+.highlight img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 1.2rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+}
+
+/* City Titles */
+.highlight h3 {
+  font-size: 1.6rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  text-align: center;
+  color: #fff;
+  background: linear-gradient(135deg, #dd2476, #ff512f);
+  padding: 0.6rem 1rem;
+  border-radius: 1rem;
+  display: inline-block;
+  box-shadow: 0 4px 15px rgba(221, 36, 118, 0.4);
+}
+
+/* Place List */
+.highlight ul {
+  list-style: none;
+  padding-left: 0;
+  margin-top: 1rem;
+}
+
+.highlight ul li {
+  font-size: 1rem;
+  color: #333;
+  padding: 0.5rem 0;
+  border-bottom: 1px dashed #ddd;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  transition: color 0.3s;
+}
+
+.highlight ul li:before {
+  content: "📍";
+  font-size: 1.1rem;
+}
+
+.highlight ul li:hover {
+  color: #dd2476;
+}
+
+/* Tour Message Section */
+.tour-message {
+  text-align: center;
+  background: linear-gradient(135deg, #ffe082, #ffccbc);
+  border-radius: 2rem; /* slightly more rounded */
+  padding: 3.5rem 2rem; /* more spacious padding */
+  margin: 3rem auto;
+  box-shadow: 0 10px 35px rgba(0,0,0,0.15); /* deeper shadow for depth */
+  position: relative;
+  overflow: hidden;
+  animation: pulse 6s ease-in-out infinite; /* smoother pulse */
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+/* Decorative floating icons for a travel vibe */
+.tour-message::before,
+.tour-message::after {
+  content: "✈️🌏🕌";
+  position: absolute;
+  font-size: 2rem;
+  opacity: 0.15;
+  animation: float 6s infinite alternate ease-in-out;
+}
+
+.tour-message::before {
+  top: 10px;
+  left: 15px;
+}
+
+.tour-message::after {
+  bottom: 15px;
+  right: 20px;
+}
+
+/* Smooth floating animation for icons */
+@keyframes float {
+  0% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(10deg); }
+  100% { transform: translateY(0) rotate(-5deg); }
+}
+
+/* Pulse animation for the container */
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.03); }
+  100% { transform: scale(1); }
+}
+
+.tour-message h3 {
+  font-size: 2.2rem;
+  font-weight: 900;
+  margin-bottom: 1.2rem;
+  color: #222;
+  letter-spacing: 1px;
+  text-shadow: 1px 1px 5px rgba(0,0,0,0.1);
+}
+
+.tour-message p {
+  font-size: 1.15rem;
+  font-weight: 500;
+  color: #444;
+  line-height: 1.8;
+  max-width: 850px;
+  margin: 0 auto;
+}
+
+
+
+.itinerary {
+  max-width: 900px;
+  margin: 3rem auto;
+  position: relative;
+  padding: 0 1rem;
+}
+
+.itinerary h2 {
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 3rem;
+  color: #222;
+  text-shadow: 1px 1px 5px rgba(0,0,0,0.1);
+}
+
+/* Timeline container */
+.timeline {
+  position: relative;
+  padding: 2rem 0;
+}
+
+/* Central vertical line */
+.timeline::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 4px;
+  background: linear-gradient(180deg, #ff512f, #dd2476);
+  transform: translateX(-50%);
+  border-radius: 2px;
+}
+
+/* Day blocks */
+.day {
+  position: relative;
+  width: 45%;
+  padding: 1rem 2rem;
+  background: rgba(255,255,255,0.95);
+  margin-bottom: 2rem;
+  border-radius: 1.5rem;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.day:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+}
+
+/* Left side */
+.day.left {
+  left: 0;
+  text-align: right;
+}
+
+/* Right side */
+.day.right {
+  left: 55%;
+  text-align: left;
+}
+
+/* Connectors (snake lines) */
+.day::after {
+  content: "";
+  position: absolute;
+  top: 20px;
+  width: 20px;
+  height: 20px;
+  background: #dd2476;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #dd2476;
+}
+
+.day.left::after {
+  right: -10px;
+}
+
+.day.right::after {
+  left: -10px;
+}
+
+/* Day headings */
+.day h4 {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #222;
+  margin-bottom: 0.5rem;
+}
+
+/* Day descriptions */
+.day p {
+  color: #444;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+
+
+
+    /* Gallery */
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px,1fr));
+      gap: 1rem;
+    }
+    .gallery img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 1rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      transition: transform 0.4s;
+    }
+    .gallery img:hover {
+      transform: scale(1.08);
+    }
+
+/* Map Section */
+#map {
+  height: 600px;
+  width: 100%;
+  border-radius: 2.5rem; /* increased curve */
+  box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+  margin-top: 3rem;
+  border: 6px solid;
+  border-image-slice: 1;
+  border-image-source: linear-gradient(135deg, #ff512f, #dd2476);
+  transition: transform 0.4s, box-shadow 0.4s;
+  overflow: hidden;
+}
+
+/* Hover animation on map */
+#map:hover {
+  transform: scale(1.02);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.35);
+}
+
+/* Hub Labels */
+.hub-label {
+  background: linear-gradient(135deg, #ff512f, #dd2476);
+  border-radius: 1.2rem; /* smooth rounded edges for labels */
+  padding: 5px 12px;
+  font-size: 14px;
+  font-weight: bold;
+  color: white;
+  text-shadow: 1px 1px 5px rgba(0,0,0,0.5);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+/* Hover effect on hub labels */
+.hub-label:hover {
+  transform: scale(1.1) rotate(-2deg);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+  cursor: pointer;
+}
+
+/* Optional background pattern behind map */
+section#map-section {
+  background: radial-gradient(circle at top left, rgba(255, 81, 47,0.05), transparent 70%), 
+              radial-gradient(circle at bottom right, rgba(221,36,118,0.05), transparent 70%);
+  padding: 2rem 0;
+  border-radius: 2.5rem; /* match map edges */
+}
+
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 2rem 1rem;
+  margin-top: 3rem;
+  background: linear-gradient(135deg, #222, #444);
+  color: #eee;
+  border-top-left-radius: 2rem;
+  border-top-right-radius: 2rem;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  transition: background 0.3s ease;
+}
+
+
+footer p {
+  font-size: 1rem;
+  margin: 0; /* Remove default margin for cleaner spacing */
+  line-height: 1.4;
+}
+
+
+/* Journey Vibes Section */
+.journey-vibes {
+  background: linear-gradient(135deg, #ffe082, #ffccbc);
+  border-radius: 2rem;
+  padding: 4rem 2rem;
+  margin: 3rem auto;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.2);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.5s;
+}
+
+.journey-vibes h2 {
+  color: #222;
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 3rem;
+  text-shadow: 2px 2px 12px rgba(0,0,0,0.15);
+}
+
+.vibes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+}
+
+.vibe-card {
+  background: linear-gradient(145deg, #ffffff, #fff6f1);
+  border-radius: 1.8rem;
+  padding: 2.5rem 1.8rem;
+  text-align: center;
+  transition: transform 0.4s, box-shadow 0.4s, background 0.4s;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  position: relative;
+  overflow: hidden;
+}
+
+.vibe-card:hover {
+  transform: translateY(-12px) scale(1.05);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.18);
+  background: linear-gradient(145deg, #fff0f0, #ffe6e6);
+}
+
+.vibe-card .icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  transition: transform 0.4s, text-shadow 0.4s;
+}
+
+.vibe-card:hover .icon {
+  transform: rotate(15deg) scale(1.2);
+  text-shadow: 2px 2px 10px rgba(0,0,0,0.15);
+}
+
+.vibe-card h4 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 0.6rem;
+  color: #dd2476;
+}
+
+.vibe-card p {
+  font-size: 1rem;
+  color: #555;
+  line-height: 1.6;
+}
+
+/* Gradient accents for each vibe */
+.vibe-card.culture { border-top: 6px solid #ff4081; }
+.vibe-card.nature { border-top: 6px solid #4caf50; }
+.vibe-card.food { border-top: 6px solid #ff9800; }
+.vibe-card.spirit { border-top: 6px solid #3f51b5; }
+
+
+.social-follow {
+  background: linear-gradient(135deg, #ff6ec4, #7873f5, #42f5e6);
+  padding: 6rem 2rem;
+  text-align: center;
+  border-radius: 2rem;
+  margin: 3rem auto;
+  box-shadow: 0 15px 50px rgba(0,0,0,0.35);
+  position: relative;
+  overflow: hidden;
+  
+  /* NEW: max width for better design */
+  max-width: 1900px;   /* adjust as per your layout */
+  width: 90%;          /* responsive */
+}
+
+
+.social-follow h2 {
+  font-size: 3rem;
+  font-weight: 900;
+  color: #fff;
+  margin-bottom: 1rem;
+  text-shadow: 2px 2px 15px rgba(0,0,0,0.3);
+}
+
+.social-follow p {
+  color: #fff;
+  font-size: 1.2rem;
+  margin-bottom: 3rem;
+  text-shadow: 1px 1px 10px rgba(0,0,0,0.2);
+}
+
+.social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+/* Vibrant 3D social icons */
+.social-icons .icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: linear-gradient(45deg, #ff9a9e, #fad0c4, #fbc2eb);
+  font-size: 2.2rem;
+  color: #fff;
+  text-decoration: none;
+  transition: transform 0.5s ease, box-shadow 0.5s ease, background 0.5s ease;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.35), 0 0 15px rgba(255,255,255,0.2) inset;
+  animation: float 3s ease-in-out infinite;
+}
+
+/* 3D hover + glow effect */
+.social-icons .icon:hover {
+  transform: translateY(-15px) rotateY(20deg) scale(1.3);
+  box-shadow: 0 20px 45px rgba(0,0,0,0.5), 0 0 25px rgba(255,255,255,0.6) inset;
+  filter: brightness(1.2);
+}
+
+/* Floating animation */
+@keyframes float {
+  0%, 100% { transform: translateY(0) }
+  50% { transform: translateY(-10px) }
+}
+
+/* Individual brand gradients */
+.social-icons .facebook { background: linear-gradient(45deg, #3b5998, #4c6ef5, #00a2ff); }
+.social-icons .instagram { background: linear-gradient(45deg, #feda75, #d62976, #962fbf, #feda75); }
+.social-icons .twitter { background: linear-gradient(45deg, #00c6ff, #1da1f2, #00c6ff); }
+.social-icons .youtube { background: linear-gradient(45deg, #ff4b2b, #ff0000, #ff6b6b); }
+
+/* Icon glow inside */
+.social-icons .icon i {
+  text-shadow: 0 0 12px rgba(255,255,255,0.9), 0 0 20px rgba(255,255,255,0.5);
+}
+
+/* Hover extra glow */
+.social-icons .icon:hover i {
+  text-shadow: 0 0 20px #fff, 0 0 30px rgba(255,255,255,0.6);
+}
+
+
+/* Navbar styles */
+.navbar {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 1rem 2rem;
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 999;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  border-radius: 0 0 1rem 1rem;
+}
+
+.nav-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.logo {
+  font-weight: bold;
+  font-size: 1.5rem;
+  color: #222;
+}
+
+/* Hamburger menu styles */
+.menu-toggle {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  width: 30px;
+  height: 25px;
+  justify-content: space-between;
+  transition: all 0.3s ease;
+}
+
+.menu-toggle:focus {
+  outline: none;
+}
+
+.menu-toggle .bar {
+  height: 3px;
+  width: 100%;
+  background-color: #222;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+/* Navigation menu styles */
+.nav-menu {
+  list-style: none; /* Remove bullets */
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Center menu items horizontally */
+  gap: 1.5rem;
+  transition: max-height 0.3s ease, opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Individual menu items */
+.nav-menu li {
+  position: relative;
+}
+
+/* Style links */
+.nav-menu a {
+  text-decoration: none;
+  color: #222;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s;
+}
+
+/* Hover effect on links */
+.nav-menu a:hover {
+  background: linear-gradient(135deg, #ff512f, #dd2476);
+  color: #fff;
+}
+/* Remove bullets from dropdown menu list items */
+.dropdown-content {
+  list-style: none; /* Remove bullets */
+  padding: 0;       /* Optional: Remove default padding */
+  margin: 0;        /* Optional: Remove default margin */
+}
+/* Dropdown indicator arrow on "My Journey" */
+.nav-menu li.dropdown > a {
+  position: relative;
+  padding-right: 1.2em; /* space for arrow */
+  justify-content: center;
+}
+
+/* Arrow icon on the right side of "My Journey" */
+.nav-menu li.dropdown > a::after {
+  content: "▼";
+  position: absolute;
+  right: 0.5em;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.7em;
+  color: #222;
+}
+
+/* Remove arrow from other menu items */
+.nav-menu li:not(.dropdown) > a::after {
+  content: "";
+}
+
+/* Parent dropdown item */
+li.dropdown {
+  position: relative;
+}
+
+/* Dropdown menu */
+.dropdown > .dropdown-content {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 999;
+  display: none; /* Hidden by default */
+  list-style: none;
+  background: #fff;
+  min-width: 160px;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  padding: 0;
+  margin-top: 0.5rem;
+}
+
+/* Show dropdown on hover */
+li.dropdown:hover > .dropdown-content,
+li.dropdown:focus-within > .dropdown-content {
+  display: flex;
+  flex-direction: column;
+}
+/* Show dropdown on hover (desktop) */
+@media (min-width: 769px) {
+  .dropdown:hover > .dropdown-content,
+  .dropdown:focus-within > .dropdown-content {
+    display: flex;
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Dropdown items */
+.dropdown-content li {
+  width: 100%;
+}
+
+.dropdown-content a {
+  padding: 0.8rem 1.2rem;
+  width: 100%;
+  display: block;
+  color: #222;
+}
+
+.dropdown-content a:hover {
+  background: linear-gradient(135deg, #ff512f, #dd2476);
+  color: #fff;
+}
+
+/* Responsive styles for mobile devices */
+@media(max-width: 768px) {
+  /* Show hamburger menu button */
+  .menu-toggle {
+    display: flex;
+  }
+
+  /* Hide menu by default */
+  .nav-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 100%;
+    max-height: 0;
+    overflow: hidden;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(255,255,255,0.95);
+    transition: max-height 0.3s ease, opacity 0.3s ease, transform 0.3s ease;
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+
+  /* Show menu when active */
+  .nav-menu.active {
+    max-height: 500px; /* enough to show all items */
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Animate hamburger to X when active */
+  .menu-toggle.active .bar:nth-child(2) {
+    opacity: 0;
+  }
+  .menu-toggle.active .bar:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+  }
+  .menu-toggle.active .bar:nth-child(3) {
+    transform: rotate(-45deg) translate(6px, -6px);
+  }
+
+  /* Center menu items vertically */
+  .nav-menu {
+    align-items: center;
+  }
+
+  /* Dropdown in mobile: show on click, adjust position */
+  .dropdown.show > .dropdown-content {
+    display: flex;
+    opacity: 1;
+    transform: translateY(0);
+    position: static;
+    box-shadow: none;
+    border-top: 1px solid #ddd;
+    border-radius: 0;
+  }
+}
+
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Epic India Travel Journey</h1>
+  <p>Follow the cultural heartbeat of India, from temples to monuments.</p>
+</header>
+
+<nav class="navbar">
+  <div class="nav-container">
+    <div class="logo">Epic Walks</div>
+    <div class="menu-toggle" id="menu-toggle" aria-label="Toggle Menu" aria-expanded="false" role="button" tabindex="0">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </div>
+    <ul class="nav-menu">
+      <li><a href="index.html">Home</a></li>
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle">My Journey</a>
+        <ul class="dropdown-content">
+          <li><a href="2022.html">2022</a></li>
+          <li><a href="2023.html">2023</a></li>
+          <li><a href="2024.html">2024</a></li>
+        </ul>
+      </li>
+      <li><a href="2025.html">Upcoming Trips</a></li>
+      <li><a href="destination.html">Destinations</a></li>
+      <li><a href="gallary.html">Gallery</a></li>
+      <li><a href="connect.html">Connect Us</a></li>
+    </ul>
+  </div>
+</nav>
+
+<script>
+// Toggle menu on hamburger click
+const menuToggle = document.getElementById('menu-toggle');
+const navMenu = document.querySelector('.nav-menu');
+
+menuToggle.addEventListener('click', () => {
+  menuToggle.classList.toggle('active');
+  navMenu.classList.toggle('active');
+  // Animate hamburger to X
+  if (menuToggle.classList.contains('active')) {
+    menuToggle.setAttribute('aria-expanded', 'true');
+  } else {
+    menuToggle.setAttribute('aria-expanded', 'false');
+  }
+});
+
+// Handle dropdown in mobile
+document.querySelectorAll('.dropdown > a').forEach(link => {
+  link.addEventListener('click', e => {
+    if (window.innerWidth <= 768) {
+      e.preventDefault();
+      const parentLi = link.parentElement;
+      parentLi.classList.toggle('show');
+    }
+  });
+});
+</script>
+
+
+  <!-- MAP -->
+  <section>
+    <h2>Interactive Travel Map - Oct Month Journey (2025)</h2>
+    <div id="map"></div>
+  </section>
+
+  <section>
+    <h2>Tour Highlights</h2>
+<div class="highlights">
+      <div class="highlight">
+        <img src="https://www.tajmahalinagra.com/wp-content/uploads/2021/10/delhi-tour-1.png" alt="Delhi Highlights">
+        <h3>Delhi</h3>
+        <ul>
+          <li>India Gate</li>
+          <li>Qutub Minar</li>
+          <li>Red Fort</li>
+          <li>Lotus Temple</li>
+          <li>Akshardham Mandir</li>
+          <li>Jantar Mantar</li>
+          <li>Humayun’s Tomb</li>
+          <li>National Museum & Science Centre</li>
+          <li>Rajghat, Jama Masjid</li>
+          <li>Parliament & Rashtrapati Bhawan</li>
+        </ul>
+      </div>
+      <div class="highlight">
+        <img src="https://static.wixstatic.com/media/d61bdf_7f6c3648472b42bca6129e30a1e39d98~mv2.jpg/v1/fill/w_980,h_515,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/d61bdf_7f6c3648472b42bca6129e30a1e39d98~mv2.jpg" alt="Vrindavan Highlights">
+        <h3>Vrindavan</h3>
+        <ul>
+          <li>ISKCON Temple</li>
+          <li>Prem Mandir</li>
+          <li>Banke Bihari Temple</li>
+          <li>Govind Dev Ji Temple</li>
+          <li>Nidhivan</li>
+          <li>Radha Raman Temple</li>
+        </ul>
+      </div>
+      <div class="highlight">
+        <img src="https://static.wixstatic.com/media/d61bdf_7f6c3648472b42bca6129e30a1e39d98~mv2.jpg/v1/fill/w_980,h_515,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/d61bdf_7f6c3648472b42bca6129e30a1e39d98~mv2.jpg" alt="Mathura Highlights">
+        <h3>Mathura</h3>
+        <ul>
+          <li>Krishna Janmasthan</li>
+          <li>Dwarkadheesh Temple</li>
+          <li>Birla Temple</li>
+          <li>Kans Quila</li>
+        </ul>
+      </div>
+      <div class="highlight">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcReFqXjD1EKg-z8XHFL9zIjOuD4Qq8b8UipdA&s" alt="Agra Highlights">
+        <h3>Agra</h3>
+        <ul>
+          <li>Taj Mahal</li>
+          <li>Agra Fort</li>
+          <li>Mehtab Bagh</li>
+        </ul>
+      </div>
+      <div class="highlight">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSu67G1kGXQi-8C_kwj31Camysy9JBez-jexg&s" alt="Ayodhya Highlights">
+        <h3>Ayodhya</h3>
+        <ul>
+          <li>Ram Janmabhoomi</li>
+          <li>Hanuman Garhi</li>
+          <li>Kanak Bhawan</li>
+          <li>Ram Ki Paidi</li>
+        </ul>
+      </div>
+      <div class="highlight">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKKZF2UMGqiN0ckTlaUyqkVquAYRyDtLRn0Q&s" alt="Varanasi Highlights">
+        <h3>Varanasi</h3>
+        <ul>
+          <li>Kashi Vishwanath Temple</li>
+          <li>Dashashwamedh Ghat</li>
+          <li>Ganga Aarti</li>
+          <li>Sarnath</li>
+          <li>Assi Ghat</li>
+        </ul>
+      </div>
+      <div class="highlight">
+        <img src="https://fivestarholiday.in/wp-content/uploads/2024/09/Five-Star-Holiday-Travels-2.png" alt="Gaya Highlights">
+        <h3>Gaya</h3>
+        <ul>
+          <li>Mahabodhi Temple</li>
+          <li>Great Buddha Statue</li>
+          <li>Vishnuprad Temple</li>
+          <li>Thai & Bhutan Monastery</li>
+          <li>Chinese Temple</li>
+        </ul>
+      </div>
+      <div class="highlight">
+        <img src="https://s7ap1.scene7.com/is/image/incredibleindia/sri-jagannath-temple-puri-odisha-3-attr-hero?qlt=82&ts=1726663744795" alt="Puri Highlights">
+        <h3>Puri</h3>
+        <ul>
+          <li>Jagannath Temple</li>
+          <li>Sea Beach</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEW TOUR MESSAGE -->
+<section class="tour-message">
+  <h3>✨ India Tour – October 2025 ✨</h3>
+  <p>
+    Join us on a <b>cultural and spiritual journey</b> across India.<br>
+    From sacred temples to iconic monuments, experience the heartbeat of our heritage together!<br><br>
+    Wander through bustling local markets, savor authentic street food, and capture the vibrant colors of traditional festivals. 
+    Every city has its own story, every street its own charm – come explore, discover, and create memories that will last a lifetime.<br><br>
+    Whether you are a history buff, a photography enthusiast, or simply seeking inspiration, this journey promises moments of awe, joy, and connection with the soul of India.
+  </p>
+</section>
+
+
+
+
+
+  <!-- ITINERARY -->
+<section class="itinerary">
+  <h2>Day-wise Itinerary</h2>
+  <div class="timeline">
+    
+    <div class="day left"><h4>Day 1-2: Delhi</h4><p>India Gate, Qutub Minar, Lotus Temple...</p></div>
+    <div class="day right"><h4>Day 3: Vrindavan</h4><p>ISKCON Temple, Prem Mandir...</p></div>
+    <div class="day left"><h4>Day 4: Mathura</h4><p>Krishna Janmasthan, Dwarkadheesh Temple.</p></div>
+    <div class="day right"><h4>Day 5: Agra</h4><p>Taj Mahal, Agra Fort, Mehtab Bagh.</p></div>
+    <div class="day left"><h4>Day 6: Ayodhya</h4><p>Ram Janmabhoomi, Hanuman Garhi.</p></div>
+    <div class="day right"><h4>Day 7-8: Varanasi</h4><p>Ganga Aarti, Kashi Vishwanath Temple.</p></div>
+    <div class="day left"><h4>Day 9: Gaya</h4><p>Mahabodhi Temple, Great Buddha Statue.</p></div>
+    <div class="day right"><h4>Day 10: Puri</h4><p>Jagannath Temple, Sea Beach.</p></div>
+
+  </div>
+</section>
+
+
+  <!-- GALLERY -->
+  <section>
+    <h2>Travel Inspiration</h2>
+    <div class="gallery">
+      <img src="https://static.toiimg.com/photo/65666850.cms">
+      <img src="https://treasuretripin.com/wp-content/uploads/2023/12/SECRETS-TO-EXPERIENCE-IN-TAJ-MAHAL.png">
+      <img src="https://s7ap1.scene7.com/is/image/incredibleindia/manikarnika-ghat-city-hero?qlt=82&ts=1727959374496">
+      <img src="https://www.hindustantimes.com/ht-img/img/2024/01/22/original/PTI01-22-2024-000010B-0_1705901965915.jpg">
+      <img src="https://s7ap1.scene7.com/is/image/incredibleindia/qutab-minar-delhi-attr-hero?qlt=82&ts=1742169673469">
+      <img src="https://media1.thrillophilia.com/filestore/qhqpu576jwj95kntok28k27w5hzk_1574923441_akshardham_monument_evening-106.jpg">
+      <img src="https://s7ap1.scene7.com/is/image/incredibleindia/lotus-temple-delhi-1-attr-hero?qlt=82&ts=1742182268849">
+      <img src="https://s7ap1.scene7.com/is/image/incredibleindia/prem-mandir-vrindavan-uttar-pradesh-1-attr-hero?qlt=82&ts=1726649460922">
+      <img src="https://cdn.britannica.com/19/256719-050-E4CE0DBA/Sarnath-site-Dhamekh-Stupa-Varanasi-Uttar-Pradesh-India.jpg">
+      <img src="https://static.toiimg.com/thumb/msid-115762993,width-1280,height-720,resizemode-4/115762993.jpg">
+      <img src="https://media.istockphoto.com/id/530927704/photo/mahabodhi-temple-bodhgaya.jpg?s=612x612&w=0&k=20&c=MeuSoIquuLhsQB5JNv3zDn8G6IPuNRlbcIW9EZd4o3o=">
+      <img src="https://c.ndtvimg.com/2024-01/i6g1iu7g_jagannath-temple-pti_625x300_16_January_24.jpeg">
+    </div>
+  </section>
+
+
+
+<section class="journey-vibes">
+  <h2>Journey Vibes</h2>
+  <div class="vibes-grid">
+    <div class="vibe-card culture">
+      <div class="icon">🎭</div>
+      <h4>Culture</h4>
+      <p>Walk through forts, ghats & historic cities alive with stories.</p>
+    </div>
+    <div class="vibe-card nature">
+      <div class="icon">🌿</div>
+      <h4>Nature</h4>
+      <p>From serene rivers to lush gardens, experience calm & beauty.</p>
+    </div>
+    <div class="vibe-card food">
+      <div class="icon">🍲</div>
+      <h4>Flavours</h4>
+      <p>Savour street food, traditional thalis & local delicacies.</p>
+    </div>
+    <div class="vibe-card spirit">
+      <div class="icon">🕉️</div>
+      <h4>Spirituality</h4>
+      <p>Temples, rituals & soulful moments that touch the heart.</p>
+    </div>
+  </div>
+</section>
+
+
+<section class="social-follow">
+  <h2>Follow Our Journey</h2>
+  <p>Stay connected! Follow us on social media to enjoy our adventures in real-time.</p>
+  <div class="social-icons">
+    <a href="https://www.facebook.com/YOUR_PAGE" target="_blank" class="icon facebook">
+      <i class="fab fa-facebook-f"></i>
+    </a>
+    <a href="https://www.instagram.com/YOUR_PAGE" target="_blank" class="icon instagram">
+      <i class="fab fa-instagram"></i>
+    </a>
+    <a href="https://www.twitter.com/YOUR_PAGE" target="_blank" class="icon twitter">
+      <i class="fab fa-twitter"></i>
+    </a>
+    <a href="https://www.youtube.com/YOUR_CHANNEL" target="_blank" class="icon youtube">
+      <i class="fab fa-youtube"></i>
+    </a>
+  </div>
+</section>
+
+
+
+
+  <footer>
+    <p>© 2025 Epic Walks | Designed with ❤️</p>
+  </footer>
+
+
+  <!-- Map Script -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script>
+    const map = L.map('map', {
+      zoomControl: true,
+      attributionControl: false
+    }).setView([23.5, 80.0], 5);
+
+    const INDIA_STATES_GEOJSON_URL =
+      'https://cdn.jsdelivr.net/gh/udit-001/india-maps-data/geojson/india.geojson';
+
+    function getRandomColor() {
+      const colors = ['#f8bbd0','#c5cae9','#b2dfdb','#ffe082','#d7ccc8','#c8e6c9','#ffccbc','#b3e5fc'];
+      return colors[Math.floor(Math.random() * colors.length)];
+    }
+
+    const stops = [
+      { city: "Berhampur", lat: 19.3147, lng: 84.7941,
+        plan: `<b>30-09-2025 Tue</b><br>Start Point<br>Home Town` },
+      { city: "Raipur", lat: 21.2514, lng: 81.6296,
+        plan: `<b>01-10-2025 Wed</b><br>Passing Stop<br>Via Raipur to Delhi` },
+      { city: "Delhi", lat: 28.6139, lng: 77.2090, 
+        plan: `<b>02-10-2025 Thu</b><br>Jantar Mantar, India Gate, Rashtrapati Bhawan...<br><b>03-10-2025 Fri</b><br>Red Fort, Jama Masjid, Akshardham, Lotus Temple` },
+      { city: "Vrindavan", lat: 27.5811, lng: 77.6936, 
+        plan: `<b>04-10-2025 Sat</b><br>ISKCON Temple, Prem Mandir, Banke Bihari Temple` },
+      { city: "Mathura", lat: 27.4924, lng: 77.6737, 
+        plan: `<b>05-10-2025 Sun</b><br>Shri Krishna Janmasthan, Dwarkadheesh Temple` },
+      { city: "Agra", lat: 27.1767, lng: 78.0081, 
+        plan: `<b>06-10-2025 Mon</b><br>Taj Mahal, Agra Fort, Mehtab Bagh` },
+      { city: "Ayodhya", lat: 26.7999, lng: 82.1944, 
+        plan: `<b>07-10-2025 Tue</b><br>Hanuman Garhi, Ram Janmabhoomi Temple` },
+      { city: "Varanasi", lat: 25.3176, lng: 83.0104, 
+        plan: `<b>08-10-2025 Wed</b><br>Sarnath, Ganga Aarti<br><b>09-10-2025 Thu</b><br>Kashi Vishwanath Temple, Dashashwamedh Ghat` },
+      { city: "Gaya", lat: 24.7955, lng: 85.0077, 
+        plan: `<b>10-10-2025 Fri</b><br>Mahabodhi Temple, Great Buddha Statue` },
+      { city: "Puri", lat: 19.8135, lng: 85.8312, 
+        plan: `<b>11-10-2025 Sat</b><br>Sea Beach, Jagannath Temple<br><b>End Point</b>` }
+    ];
+
+    const hubIcon = L.divIcon({
+      className: '',
+      html: `<div style="width:14px;height:14px;background:#d32f2f;border-radius:50%;box-shadow:0 0 0 2px #fff;"></div>`,
+      iconSize: [14,14],
+      iconAnchor: [7,7]
+    });
+
+    const latlngs = stops.map(s => [s.lat, s.lng]);
+    const route = L.polyline(latlngs, {
+      color: "#000",
+      weight: 3,
+      dashArray: "6 6"
+    });
+
+    stops.forEach(s => {
+      const marker = L.marker([s.lat, s.lng], { icon: hubIcon }).addTo(map);
+      marker.bindPopup(`<h3>${s.city}</h3>${s.plan}`);
+      marker.bindTooltip(s.city, {
+        permanent: true,
+        direction: 'right',
+        offset: L.point(10, 0),
+        className: 'hub-label'
+      }).openTooltip();
+    });
+
+    latlngs.forEach(coord => {
+      L.circleMarker(coord, {
+        radius: 5,
+        fillColor: "#000",
+        color: "#fff",
+        weight: 1,
+        fillOpacity: 1
+      }).addTo(map);
+    });
+
+    fetch(INDIA_STATES_GEOJSON_URL)
+      .then(r => r.json())
+      .then(geojson => {
+        const stateLayer = L.geoJSON(geojson, {
+          style: () => ({
+            color: '#333',
+            weight: 1,
+            fillColor: getRandomColor(),
+            fillOpacity: 0.9
+          })
+        }).addTo(map);
+
+        route.addTo(map);
+        const bounds = stateLayer.getBounds().extend(route.getBounds());
+        map.fitBounds(bounds, { padding: [20, 20] });
+      });
+  </script>
+</body>
+</html>

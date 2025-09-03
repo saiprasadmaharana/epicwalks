@@ -1,0 +1,937 @@
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #fdfdfd;
+      color: #222;
+      line-height: 1.6;
+    }
+
+/* Existing styles (your code) */
+header {
+  text-align: center;
+  padding: 1.5rem 1rem; /* Reduced padding for smaller height */
+  background: linear-gradient(135deg, #ff512f, #dd2476);
+  color: white;
+  border-bottom-left-radius: 2rem;
+  border-bottom-right-radius: 2rem;
+  box-shadow: 0 6px 25px rgba(0,0,0,0.25);
+}
+
+/* Adjust the heading size for a more compact look */
+header h1 {
+  font-size: 2rem; /* Smaller font size */
+  font-weight: 800;
+  margin-bottom: 0.5rem; /* Less space below the heading */
+  text-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+}
+
+/* Adjust paragraph size if needed */
+header p {
+  font-size: 1rem; /* Slightly smaller text */
+  opacity: 0.95;
+}
+
+section {
+  padding: 3rem 2rem;
+  max-width: 1200px;
+  margin: auto;
+}
+
+h2 {
+  text-align: center;
+  font-size: 2.2rem;
+  margin-bottom: 2rem;
+  font-weight: 800;
+  color: #333;
+  position: relative;
+}
+
+h2::after {
+  content: "";
+  display: block;
+  width: 80px;
+  height: 5px;
+  background: linear-gradient(135deg, #ff512f, #dd2476);
+  margin: 0.8rem auto 0;
+  border-radius: 5px;
+}
+
+/* Responsive adjustments for mobile screens */
+@media (max-width: 768px) {
+  header {
+    padding: 2rem 1rem;
+  }
+
+  header h1 {
+    font-size: 2rem; /* Smaller font size for mobile */
+    line-height: 1.2;
+  }
+
+  header p {
+    font-size: 1rem; /* Smaller paragraph text */
+  }
+
+  section {
+    padding: 2rem 1rem;
+  }
+
+  h2 {
+    font-size: 1.8rem; /* Adjust heading size for smaller screens */
+  }
+
+  h2::after {
+    width: 60px; /* Slightly smaller decorative line */
+  }
+}
+
+
+
+
+/* Navbar styles */
+.navbar {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 1rem 2rem;
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 999;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  border-radius: 0 0 1rem 1rem;
+}
+
+.nav-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.logo {
+  font-weight: bold;
+  font-size: 1.5rem;
+  color: #222;
+}
+
+/* Hamburger menu styles */
+.menu-toggle {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  width: 30px;
+  height: 25px;
+  justify-content: space-between;
+  transition: all 0.3s ease;
+}
+
+.menu-toggle:focus {
+  outline: none;
+}
+
+.menu-toggle .bar {
+  height: 3px;
+  width: 100%;
+  background-color: #222;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+/* Navigation menu styles */
+.nav-menu {
+  list-style: none; /* Remove bullets */
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Center menu items horizontally */
+  gap: 1.5rem;
+  transition: max-height 0.3s ease, opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Individual menu items */
+.nav-menu li {
+  position: relative;
+}
+
+/* Style links */
+.nav-menu a {
+  text-decoration: none;
+  color: #222;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s;
+}
+
+/* Hover effect on links */
+.nav-menu a:hover {
+  background: linear-gradient(135deg, #ff512f, #dd2476);
+  color: #fff;
+}
+/* Remove bullets from dropdown menu list items */
+.dropdown-content {
+  list-style: none; /* Remove bullets */
+  padding: 0;       /* Optional: Remove default padding */
+  margin: 0;        /* Optional: Remove default margin */
+}
+/* Dropdown indicator arrow on "My Journey" */
+.nav-menu li.dropdown > a {
+  position: relative;
+  padding-right: 1.2em; /* space for arrow */
+  justify-content: center;
+}
+
+/* Arrow icon on the right side of "My Journey" */
+.nav-menu li.dropdown > a::after {
+  content: "▼";
+  position: absolute;
+  right: 0.5em;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.7em;
+  color: #222;
+}
+
+/* Remove arrow from other menu items */
+.nav-menu li:not(.dropdown) > a::after {
+  content: "";
+}
+
+/* Parent dropdown item */
+li.dropdown {
+  position: relative;
+}
+
+/* Dropdown menu */
+.dropdown > .dropdown-content {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 999;
+  display: none; /* Hidden by default */
+  list-style: none;
+  background: #fff;
+  min-width: 160px;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  padding: 0;
+  margin-top: 0.5rem;
+}
+
+/* Show dropdown on hover */
+li.dropdown:hover > .dropdown-content,
+li.dropdown:focus-within > .dropdown-content {
+  display: flex;
+  flex-direction: column;
+}
+/* Show dropdown on hover (desktop) */
+@media (min-width: 769px) {
+  .dropdown:hover > .dropdown-content,
+  .dropdown:focus-within > .dropdown-content {
+    display: flex;
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Dropdown items */
+.dropdown-content li {
+  width: 100%;
+}
+
+.dropdown-content a {
+  padding: 0.8rem 1.2rem;
+  width: 100%;
+  display: block;
+  color: #222;
+}
+
+.dropdown-content a:hover {
+  background: linear-gradient(135deg, #ff512f, #dd2476);
+  color: #fff;
+}
+
+/* Responsive styles for mobile devices */
+@media(max-width: 768px) {
+  /* Show hamburger menu button */
+  .menu-toggle {
+    display: flex;
+  }
+
+  /* Hide menu by default */
+  .nav-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 100%;
+    max-height: 0;
+    overflow: hidden;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(255,255,255,0.95);
+    transition: max-height 0.3s ease, opacity 0.3s ease, transform 0.3s ease;
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+
+  /* Show menu when active */
+  .nav-menu.active {
+    max-height: 500px; /* enough to show all items */
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Animate hamburger to X when active */
+  .menu-toggle.active .bar:nth-child(2) {
+    opacity: 0;
+  }
+  .menu-toggle.active .bar:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+  }
+  .menu-toggle.active .bar:nth-child(3) {
+    transform: rotate(-45deg) translate(6px, -6px);
+  }
+
+  /* Center menu items vertically */
+  .nav-menu {
+    align-items: center;
+  }
+
+  /* Dropdown in mobile: show on click, adjust position */
+  .dropdown.show > .dropdown-content {
+    display: flex;
+    opacity: 1;
+    transform: translateY(0);
+    position: static;
+    box-shadow: none;
+    border-top: 1px solid #ddd;
+    border-radius: 0;
+  }
+}
+
+
+
+/* Hero Slider Styles */
+.hero-slider {
+  position: relative;
+  height: 80vh; /* Adjust as needed */
+  overflow: hidden;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  max-width: 1500px
+}
+
+/* Slides wrapper */
+.slides {
+  position: relative;
+  height: 100%;
+}
+
+/* Individual slide styling */
+.slide {
+  position: absolute;
+  top: 0;
+  left: 100%; /* Off-screen initially */
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  transition: all 1s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  opacity: 0;
+  border-radius: 15px;
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Active slide styling */
+.slide.active {
+  left: 0;
+  opacity: 1;
+  z-index: 2;
+  animation: fadeIn 1s forwards;
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Content overlay inside slide */
+.slide-content {
+  background: rgba(0, 0, 0, 0.4);
+  padding: 30px 40px;
+  border-radius: 10px;
+  max-width: 700px;
+  text-align: center;
+  backdrop-filter: blur(5px);
+  animation: slideUp 1s ease-out;
+}
+
+/* Title styling */
+.slide-title {
+  font-size: 2.8rem;
+  color: #fff;
+  text-shadow: 2px 2px 8px rgba(0,0,0,0.6);
+  margin-bottom: 15px;
+  font-weight: 700;
+}
+
+/* Text styling */
+.slide-text {
+  font-size: 1.2rem;
+  color: #f0f0f0;
+  line-height: 1.6;
+}
+
+/* Slide up animation for content */
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* Navigation dots container */
+.dots {
+  position: absolute;
+  bottom: 20px;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+/* Colorful dots with individual colors */
+.dots span:nth-child(1) {
+  background-color: #ff4b2b; /* Bright Red */
+}
+.dots span:nth-child(2) {
+  background-color: #ffcc00; /* Bright Yellow */
+}
+.dots span:nth-child(3) {
+  background-color: #00c3ff; /* Bright Blue */
+}
+.dots span:nth-child(4) {
+  background-color: #ff69b4; /* Hot Pink */
+}
+
+/* Style for each dot */
+.dots span {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+/* Active dot styling */
+.dots span.active {
+  transform: scale(1.2);
+  box-shadow: 0 0 20px currentColor;
+}
+
+/* Optional hover effect for dots */
+.dots span:hover {
+  transform: scale(1.3);
+  box-shadow: 0 0 20px currentColor;
+}
+
+/* Responsive typography */
+@media(max-width: 768px) {
+  .slide-title {
+    font-size: 2rem;
+  }
+  .slide-text {
+    font-size: 1rem;
+  }
+  .slide-content {
+    padding: 20px 30px;
+  }
+}
+
+@media(max-width: 768px) {
+  .slide-title {
+    font-size: 1.8rem;
+  }
+  .slide-text {
+    font-size: 1rem;
+  }
+  .slide-content {
+    padding: 15px 20px;
+  }
+  .dots {
+    gap: 10px;
+  }
+  .dots span {
+    width: 12px;
+    height: 12px;
+  }
+}
+@media(max-width: 480px) {
+  .slide-title {
+    font-size: 1.5rem;
+  }
+  .slide-text {
+    font-size: 0.9rem;
+  }
+  .slide-content {
+    padding: 10px 15px;
+  }
+}
+
+
+
+
+
+
+
+/* About My Journey Section */
+.about-journey {
+  text-align: center;
+  background: linear-gradient(135deg, #a8edea, #fed6e3);
+  border-radius: 2rem;
+  padding: 3.5rem 2rem;
+  margin: 3rem auto;
+  box-shadow: 0 10px 35px rgba(0,0,0,0.15);
+  position: relative;
+  overflow: hidden;
+  animation: pulse 6s ease-in-out infinite;
+  transition: transform 0.3s, box-shadow 0.3s;
+  max-width: 1300px
+}
+
+.about-journey::before,
+.about-journey::after {
+  content: "🌎✈️🗺️";
+  position: absolute;
+  font-size: 2rem;
+  opacity: 0.15;
+  animation: float 6s infinite alternate ease-in-out;
+}
+
+.about-journey::before {
+  top: 10px;
+  left: 15px;
+}
+
+.about-journey::after {
+  bottom: 15px;
+  right: 20px;
+}
+
+/* Floating animation for decorative icons */
+@keyframes float {
+  0% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(10deg); }
+  100% { transform: translateY(0) rotate(-5deg); }
+}
+
+/* Pulse animation for the container */
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.03); }
+  100% { transform: scale(1); }
+}
+
+.about-journey h3 {
+  font-size: 2.2rem;
+  font-weight: 900;
+  margin-bottom: 1.2rem;
+  color: #222;
+  letter-spacing: 1px;
+  text-shadow: 1px 1px 5px rgba(0,0,0,0.1);
+}
+
+.about-journey p {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 1.2rem; /* Slightly larger for better readability */
+  font-weight: 500;
+  color: #444;
+  line-height: 1.6; /* Slightly tighter but still comfortable */
+  letter-spacing: 0.5px; /* Adds a subtle spacing between letters */
+  max-width: 900px; /* Slightly wider for more space */
+  margin: 0 auto;
+  padding: 0 1rem; /* Adds horizontal padding for small screens */
+  text-align: justify; /* Optional: for a cleaner block of text */
+  text-shadow: 0 1px 2px rgba(0,0,0,0.05); /* Light shadow for depth */
+}
+
+
+
+
+
+  /* Past Journeys & Memories Styles */
+  #past-journeys {
+    /* background: linear-gradient(135deg, #f0f0f0, #ffffff); */
+    padding: 50px 20px;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  }
+
+  #past-journeys h2 {
+    text-align: center;
+    font-size: 3rem;
+    margin-bottom: 50px;
+    font-weight: bold;
+    color: #333;
+  }
+
+  /* Grid layout similar to Highlights */
+  .journeys-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+  }
+
+  /* Each journey card styling */
+  .journey-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 1.8rem;
+    padding: 1.5rem;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+    transition: transform 0.4s, box-shadow 0.4s;
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  .journey-card:hover {
+    transform: translateY(-12px) scale(1.02);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+  }
+
+  /* Image Banner in card */
+  .journey-card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 1.2rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+  }
+
+  /* City Title Styling */
+  .city-title {
+    font-size: 1.6rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    text-align: center;
+    color: #fff;
+    background: linear-gradient(135deg, #dd2476, #ff512f);
+    padding: 0.6rem 1rem;
+    border-radius: 1rem;
+    display: inline-block;
+    box-shadow: 0 4px 15px rgba(221, 36, 118, 0.4);
+  }
+
+  /* Places list styling */
+  .places-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 1rem;
+  }
+
+  .places-list li {
+    font-size: 1rem;
+    color: #333;
+    padding: 0.5rem 0;
+    border-bottom: 1px dashed #ddd;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    transition: color 0.3s;
+  }
+
+  .places-list li:before {
+    content: "📍";
+    font-size: 1.1rem;
+  }
+
+  .places-list li:hover {
+    color: #dd2476;
+  }
+
+  .journey-year {
+    background: linear-gradient(135deg, #dd2476, #ff512f);
+    color: #fff;
+    padding: 0.3rem 0.8rem;
+    border-radius: 1rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  }
+
+
+a.journey-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+
+
+
+  /* Map Section */
+  #visited-map {
+    height: 600px;
+    width: 100%;
+    border-radius: 2.5rem;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+    margin-top: 3rem;
+    border: 6px solid;
+    border-image-slice: 1;
+    border-image-source: linear-gradient(135deg, #ff512f, #dd2476);
+    transition: transform 0.4s, box-shadow 0.4s;
+    overflow: hidden;
+  }
+
+  #visited-map:hover {
+    transform: scale(1.02);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.35);
+  }
+
+/* Hub Labels - pill style */
+.hub-label {
+  background: linear-gradient(135deg, #ff512f, #dd2476);
+  border-radius: 999px;   /* fully rounded pill shape */
+  padding: 6px 14px;
+  font-size: 15px;
+  font-weight: bold;
+  color: #fff;
+  text-align: center;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  border: 2px solid rgba(255,255,255,0.2); /* soft white border */
+  transition: transform 0.3s, box-shadow 0.3s;
+  white-space: nowrap; /* keeps text in one line */
+}
+
+.hub-label:hover {
+  transform: scale(1.08);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+  cursor: pointer;
+}
+
+
+
+
+
+  /* Gallery Section */
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.2rem;
+    margin-top: 1.5rem;
+  }
+
+  .gallery-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 1.2rem;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+    cursor: pointer;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+  }
+
+  .gallery-item img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+
+  /* Hover zoom + overlay */
+  .gallery-item:hover img {
+    transform: scale(1.1);
+  }
+
+  .overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(180deg, transparent, rgba(0,0,0,0.7));
+    color: #fff;
+    font-size: 1rem;
+    font-weight: bold;
+    opacity: 0;
+    transform: translateY(100%);
+    transition: all 0.4s ease;
+  }
+
+  .gallery-item:hover .overlay {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Lightbox modal */
+  /* Lightbox modal */
+  .lightbox {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.85);
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .lightbox img {
+    max-width: 90%;
+    max-height: 80%;
+    border-radius: 1rem;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+  }
+
+  .lightbox.active {
+    display: flex;
+  }
+
+  /* Close button */
+  .lightbox .close-btn {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    font-size: 32px;
+    font-weight: bold;
+    color: #fff;
+    cursor: pointer;
+    transition: color 0.3s ease, transform 0.2s ease;
+  }
+  /* Responsive tweaks */
+  @media (max-width: 768px) {
+    .gallery {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 480px) {
+    .gallery {
+      grid-template-columns: 1fr;
+    }
+    .gallery-item img {
+      height: 200px;
+    }
+  }
+
+
+
+.social-follow {
+  background: linear-gradient(135deg, #ff6ec4, #7873f5, #42f5e6);
+  padding: 6rem 2rem;
+  text-align: center;
+  border-radius: 2rem;
+  margin: 3rem auto;
+  box-shadow: 0 15px 50px rgba(0,0,0,0.35);
+  position: relative;
+  overflow: hidden;
+  
+  /* NEW: max width for better design */
+  max-width: 1900px;   /* adjust as per your layout */
+  width: 90%;          /* responsive */
+}
+
+
+.social-follow h2 {
+  font-size: 3rem;
+  font-weight: 900;
+  color: #fff;
+  margin-bottom: 1rem;
+  text-shadow: 2px 2px 15px rgba(0,0,0,0.3);
+}
+
+.social-follow p {
+  color: #fff;
+  font-size: 1.2rem;
+  margin-bottom: 3rem;
+  text-shadow: 1px 1px 10px rgba(0,0,0,0.2);
+}
+
+.social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+/* Vibrant 3D social icons */
+.social-icons .icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: linear-gradient(45deg, #ff9a9e, #fad0c4, #fbc2eb);
+  font-size: 2.2rem;
+  color: #fff;
+  text-decoration: none;
+  transition: transform 0.5s ease, box-shadow 0.5s ease, background 0.5s ease;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.35), 0 0 15px rgba(255,255,255,0.2) inset;
+  animation: float 3s ease-in-out infinite;
+}
+
+/* 3D hover + glow effect */
+.social-icons .icon:hover {
+  transform: translateY(-15px) rotateY(20deg) scale(1.3);
+  box-shadow: 0 20px 45px rgba(0,0,0,0.5), 0 0 25px rgba(255,255,255,0.6) inset;
+  filter: brightness(1.2);
+}
+
+/* Floating animation */
+@keyframes float {
+  0%, 100% { transform: translateY(0) }
+  50% { transform: translateY(-10px) }
+}
+
+/* Individual brand gradients */
+.social-icons .facebook { background: linear-gradient(45deg, #3b5998, #4c6ef5, #00a2ff); }
+.social-icons .instagram { background: linear-gradient(45deg, #feda75, #d62976, #962fbf, #feda75); }
+.social-icons .twitter { background: linear-gradient(45deg, #00c6ff, #1da1f2, #00c6ff); }
+.social-icons .youtube { background: linear-gradient(45deg, #ff4b2b, #ff0000, #ff6b6b); }
+
+/* Icon glow inside */
+.social-icons .icon i {
+  text-shadow: 0 0 12px rgba(255,255,255,0.9), 0 0 20px rgba(255,255,255,0.5);
+}
+
+/* Hover extra glow */
+.social-icons .icon:hover i {
+  text-shadow: 0 0 20px #fff, 0 0 30px rgba(255,255,255,0.6);
+}
+
+
+
+
+  
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 2rem 1rem;
+  margin-top: 3rem;
+  background: linear-gradient(135deg, #222, #444);
+  color: #eee;
+  border-top-left-radius: 2rem;
+  border-top-right-radius: 2rem;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  transition: background 0.3s ease;
+}
+
+
+
+footer p {
+  font-size: 1rem;
+  margin: 0; /* Remove default margin for cleaner spacing */
+  line-height: 1.4;
+}
